@@ -1,25 +1,26 @@
-import type { Metadata } from "next"
-import { Inter } from "next/font/google"
-import "./globals.css"
+import type { Metadata } from 'next';
+import { Inter } from 'next/font/google';
+import './globals.css';
 
 const inter = Inter({
-  variable: "--font-inter",
-  subsets: ["latin"],
-})
+  variable: '--font-inter',
+  subsets: ['latin'],
+});
 
 export const metadata: Metadata = {
-  title: "Candid — Track your job search",
-  description: "Kanban board for job hunters. Track applications, get follow-up reminders and generate emails with AI.",
-}
+  title: 'Candid — Track your job search',
+  description:
+    'Kanban board for job hunters. Track applications, get follow-up reminders and generate emails with AI.',
+};
 
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode
+  children: React.ReactNode;
 }>) {
   return (
     <html lang="fr" className={`${inter.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col font-[var(--font-inter)]">{children}</body>
     </html>
-  )
+  );
 }
