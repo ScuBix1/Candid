@@ -1,11 +1,9 @@
+import { cn } from '@/lib/utils';
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
+import { Geist } from 'next/font/google';
 import './globals.css';
 
-const inter = Inter({
-  variable: '--font-inter',
-  subsets: ['latin'],
-});
+const geist = Geist({ subsets: ['latin'], variable: '--font-sans' });
 
 export const metadata: Metadata = {
   title: 'Candid — Track your job search',
@@ -19,8 +17,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="fr" className={`${inter.variable} h-full antialiased`}>
-      <body className="min-h-full flex flex-col font-[var(--font-inter)]">{children}</body>
+    <html lang="fr" className={cn('h-full', 'antialiased', 'font-sans', geist.variable)}>
+      <body className="min-h-full flex flex-col font-(--font-inter)">{children}</body>
     </html>
   );
 }
