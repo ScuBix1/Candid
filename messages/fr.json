@@ -1,0 +1,30 @@
+{
+  "auth": {
+    "signup": {
+      "title": " Inscription",
+      "description": "Entrez vos informations pour vous inscrire.",
+      "errors": {
+        "emailInvalid": "Email invalide",
+        "passwordTooShort": "Minimum 8 caractères",
+        "passwordNoUppercase": "Au moins une majuscule requise",
+        "passwordNoNumber": "Au moins un chiffre requis",
+        "passwordNoSpecialChar": "Au moins un caractère spécial requis",
+        "passwordMismatch": "Les mots de passe ne correspondent pas",
+        "emailAlreadyUsed": "Cet email est déjà utilisé",
+        "genericError": "Une erreur est survenue. Réessaie.",
+        "displayNameTooShort": "Minimum 2 caractères"
+      },
+      "form": {
+        "emailLabel": "Email",
+        "passwordLabel": "Mot de passe",
+        "confirmPasswordLabel": "Confirmation mot de passe",
+        "submitButton": "S'inscrire",
+        "alreadyHaveAccount": "Déjà un compte ?",
+        "loginLink": "Se connecter",
+        "emailPlaceholder": "john.doe@email.com",
+        "loadingButton": "Inscription...",
+        "displayNameLabel": "Prénom et Nom"
+      }
+    }
+  }
+}
