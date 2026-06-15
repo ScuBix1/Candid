@@ -1,7 +1,7 @@
 import { expect, test } from '@playwright/test';
 import fr from '../messages/fr.json';
 
-const testPassword = 'TestP@ssw0rd!'; // gitguardian:ignore
+const testPassword = 'TestP@ssw0rd!';
 
 test.describe('Signup', () => {
   test.beforeEach(async ({ page }) => {
@@ -38,7 +38,7 @@ test.describe('Signup', () => {
     await page.fill('#displayName', 'John Doe');
     await page.fill('#email', 'john@example.com');
     await page.fill('#password', testPassword);
-    await page.fill('#confirmPassword', 'Différent1!'); // gitguardian:ignore
+    await page.fill('#confirmPassword', 'Différent1!');
     await page.click('button[type="submit"]');
     await expect(page.locator('[data-slot="field-error"]')).toBeVisible();
     await expect(page.locator('[data-slot="field-error"]')).toHaveText(
@@ -50,8 +50,8 @@ test.describe('Signup', () => {
   test('rejette si le mot de passe fait moins de 8 caractères', async ({ page }) => {
     await page.fill('#displayName', 'John Doe');
     await page.fill('#email', 'john@example.com');
-    await page.fill('#password', 'Passw1!'); // gitguardian:ignore
-    await page.fill('#confirmPassword', 'Passw1!'); // gitguardian:ignore
+    await page.fill('#password', 'Passw1!');
+    await page.fill('#confirmPassword', 'Passw1!');
     await page.click('button[type="submit"]');
     await expect(page.locator('[data-slot="field-error"]')).toBeVisible();
     await expect(page.locator('[data-slot="field-error"]')).toHaveText(
@@ -63,8 +63,8 @@ test.describe('Signup', () => {
   test("rejette si le mot de passe n'a pas de caractère spécial", async ({ page }) => {
     await page.fill('#displayName', 'John Doe');
     await page.fill('#email', 'john@example.com');
-    await page.fill('#password', 'Password1'); // gitguardian:ignore
-    await page.fill('#confirmPassword', 'Password1'); // gitguardian:ignore
+    await page.fill('#password', 'Password1');
+    await page.fill('#confirmPassword', 'Password1');
     await page.click('button[type="submit"]');
     await expect(page.locator('[data-slot="field-error"]')).toBeVisible();
     await expect(page.locator('[data-slot="field-error"]')).toHaveText(
@@ -76,8 +76,8 @@ test.describe('Signup', () => {
   test("rejette si le mot de passe n'a pas de majuscule", async ({ page }) => {
     await page.fill('#displayName', 'John Doe');
     await page.fill('#email', 'john@example.com');
-    await page.fill('#password', 'password1!'); // gitguardian:ignore
-    await page.fill('#confirmPassword', 'password1!'); // gitguardian:ignore
+    await page.fill('#password', 'password1!');
+    await page.fill('#confirmPassword', 'password1!');
     await page.click('button[type="submit"]');
     await expect(page.locator('[data-slot="field-error"]')).toBeVisible();
     await expect(page.locator('[data-slot="field-error"]')).toHaveText(
@@ -89,8 +89,8 @@ test.describe('Signup', () => {
   test("rejette si le mot de passe n'a pas de chiffre", async ({ page }) => {
     await page.fill('#displayName', 'John Doe');
     await page.fill('#email', 'john@example.com');
-    await page.fill('#password', 'Password!'); // gitguardian:ignore
-    await page.fill('#confirmPassword', 'Password!'); // gitguardian:ignore
+    await page.fill('#password', 'Password!');
+    await page.fill('#confirmPassword', 'Password!');
     await page.click('button[type="submit"]');
     await expect(page.locator('[data-slot="field-error"]')).toBeVisible();
     await expect(page.locator('[data-slot="field-error"]')).toHaveText(
