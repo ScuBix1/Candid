@@ -1,5 +1,6 @@
 import { cn } from '@/lib/utils';
 import type { Metadata } from 'next';
+import { NextIntlClientProvider } from 'next-intl';
 import { Geist } from 'next/font/google';
 import './globals.css';
 
@@ -18,7 +19,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="fr" className={cn('h-full', 'antialiased', 'font-sans', geist.variable)}>
-      <body className="min-h-full flex flex-col font-(--font-inter)">{children}</body>
+      <body className="min-h-full flex flex-col font-(--font-inter)">
+        <NextIntlClientProvider>{children}</NextIntlClientProvider>
+      </body>
     </html>
   );
 }

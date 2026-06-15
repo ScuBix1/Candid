@@ -7,7 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "lint:fix": "npx eslint . --fix && npx prettier . --write"
+    "lint:fix": "npx eslint . --fix && npx prettier . --write",
+    "test": "jest",
+    "test:e2e": "playwright test"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.4.0",
@@ -17,6 +19,7 @@
     "clsx": "^2.1.1",
     "lucide-react": "^1.18.0",
     "next": "16.2.7",
+    "next-intl": "^4.13.0",
     "posthog-js": "^1.386.6",
     "posthog-node": "^5.36.17",
     "radix-ui": "^1.5.0",
@@ -29,14 +32,19 @@
     "zod": "^4.4.3"
   },
   "devDependencies": {
+    "@playwright/test": "^1.60.0",
     "@tailwindcss/postcss": "^4",
+    "@types/jest": "^30.0.0",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.2.7",
     "eslint-config-prettier": "^10.1.8",
+    "jest": "^30.4.2",
+    "jest-environment-jsdom": "^30.4.1",
     "tailwindcss": "^4",
+    "ts-jest": "^29.4.11",
     "typescript": "^5"
   }
 }
