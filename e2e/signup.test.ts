@@ -1,6 +1,8 @@
 import { expect, test } from '@playwright/test';
 import fr from '../messages/fr.json';
 
+const testPassword = 'TestP@ssw0rd!';
+
 test.describe('Signup', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/signup');
@@ -9,8 +11,8 @@ test.describe('Signup', () => {
   test("rejette si le nom d'affichage fait moins de 2 caractères", async ({ page }) => {
     await page.fill('#displayName', 'J');
     await page.fill('#email', 'john@example.com');
-    await page.fill('#password', 'Password1!');
-    await page.fill('#confirmPassword', 'Password1!');
+    await page.fill('#password', testPassword);
+    await page.fill('#confirmPassword', testPassword);
     await page.click('button[type="submit"]');
     await expect(page.locator('[data-slot="field-error"]')).toBeVisible();
     await expect(page.locator('[data-slot="field-error"]')).toHaveText(
@@ -22,8 +24,8 @@ test.describe('Signup', () => {
   test('rejette un email invalide', async ({ page }) => {
     await page.fill('#displayName', 'John Doe');
     await page.fill('#email', 'pasunemail@');
-    await page.fill('#password', 'Password1!');
-    await page.fill('#confirmPassword', 'Password1!');
+    await page.fill('#password', testPassword);
+    await page.fill('#confirmPassword', testPassword);
     await page.click('button[type="submit"]');
     await expect(page.locator('[data-slot="field-error"]')).toBeVisible();
     await expect(page.locator('[data-slot="field-error"]')).toHaveText(
@@ -35,7 +37,7 @@ test.describe('Signup', () => {
   test('rejette si les mots de passe ne correspondent pas', async ({ page }) => {
     await page.fill('#displayName', 'John Doe');
     await page.fill('#email', 'john@example.com');
-    await page.fill('#password', 'Password1!');
+    await page.fill('#password', testPassword);
     await page.fill('#confirmPassword', 'Différent1!');
     await page.click('button[type="submit"]');
     await expect(page.locator('[data-slot="field-error"]')).toBeVisible();
@@ -100,8 +102,8 @@ test.describe('Signup', () => {
   test('accepte si toutes les données sont valides', async ({ page }) => {
     await page.fill('#displayName', 'John Doe');
     await page.fill('#email', `test-${Date.now()}@example.com`);
-    await page.fill('#password', 'Password1!');
-    await page.fill('#confirmPassword', 'Password1!');
+    await page.fill('#password', testPassword);
+    await page.fill('#confirmPassword', testPassword);
     await page.click('button[type="submit"]');
     await expect(page).toHaveURL('/dashboard');
   });
