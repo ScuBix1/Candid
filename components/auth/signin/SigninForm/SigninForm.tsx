@@ -3,8 +3,8 @@
 import { Button } from '@/components/ui/button';
 import { Field, FieldDescription, FieldError, FieldGroup, FieldLabel } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
-import { signUp } from '@/lib/actions/auth/signup/signup';
-import { createSignupSchema, SignupSchema } from '@/lib/validations/signup';
+import { signIn } from '@/lib/actions/auth/signin/signin';
+import { createSigninSchema, SigninSchema } from '@/lib/validations/singin';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
@@ -12,51 +12,39 @@ import posthog from 'posthog-js';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
-export function SignupForm() {
+export function SigninForm() {
   const router = useRouter();
-  const t = useTranslations('auth.signup.errors');
-  const tForm = useTranslations('auth.signup.form');
+  const t = useTranslations('auth.signin.errors');
+  const tForm = useTranslations('auth.signin.form');
   const [serverError, setServerError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  const form = useForm<SignupSchema>({
-    resolver: zodResolver(createSignupSchema(t)),
-    defaultValues: { displayName: '', email: '', password: '', confirmPassword: '' },
+  const form = useForm<SigninSchema>({
+    resolver: zodResolver(createSigninSchema(t)),
+    defaultValues: { email: '', password: '' },
   });
 
-  async function onSubmit(values: SignupSchema) {
+  async function onSubmit(values: SigninSchema) {
     setIsLoading(true);
     setServerError(null);
 
-    const { error } = await signUp(values.email, values.displayName, values.password);
+    const { error } = await signIn(values.email, values.password);
 
     if (error) {
       setServerError(
-        error.includes('already registered') ? t('emailAlreadyUsed') : t('genericError')
+        error.includes('Invalid login credentials') ? t('invalidCredentials') : t('genericError')
       );
       setIsLoading(false);
       return;
     }
 
-    posthog.capture('user_signed_up', { source: 'direct' });
+    posthog.capture('user_signed_in');
     router.push('/dashboard');
   }
 
   return (
     <form onSubmit={form.handleSubmit(onSubmit)} noValidate>
       <FieldGroup>
-        <Field>
-          <FieldLabel htmlFor="displayName">{tForm('displayNameLabel')}</FieldLabel>
-          <Input
-            id="displayName"
-            placeholder="John Doe"
-            aria-invalid={!!form.formState.errors.displayName}
-            {...form.register('displayName')}
-          />
-          {form.formState.errors.displayName && (
-            <FieldError>{form.formState.errors.displayName.message}</FieldError>
-          )}
-        </Field>
         <Field>
           <FieldLabel htmlFor="email">{tForm('emailLabel')}</FieldLabel>
           <Input
@@ -85,20 +73,6 @@ export function SignupForm() {
           )}
         </Field>
 
-        <Field>
-          <FieldLabel htmlFor="confirmPassword">{tForm('confirmPasswordLabel')}</FieldLabel>
-          <Input
-            id="confirmPassword"
-            type="password"
-            placeholder="••••••••"
-            aria-invalid={!!form.formState.errors.confirmPassword}
-            {...form.register('confirmPassword')}
-          />
-          {form.formState.errors.confirmPassword && (
-            <FieldError>{form.formState.errors.confirmPassword.message}</FieldError>
-          )}
-        </Field>
-
         {serverError && <FieldError>{serverError}</FieldError>}
 
         <Field>
@@ -106,9 +80,9 @@ export function SignupForm() {
             {isLoading ? tForm('loadingButton') : tForm('submitButton')}
           </Button>
           <FieldDescription className="text-center">
-            {tForm('alreadyHaveAccount')}{' '}
-            <a href="/signin" className="text-primary hover:underline">
-              {tForm('loginLink')}
+            {tForm('noAccount')}{' '}
+            <a href="/signup" className="text-primary hover:underline">
+              {tForm('signupLink')}
             </a>
           </FieldDescription>
         </Field>

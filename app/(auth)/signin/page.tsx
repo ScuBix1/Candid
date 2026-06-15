@@ -1,3 +1,5 @@
-export default function LoginPage() {
-  return <main>Login — coming soon</main>;
+import { SigninCard } from '@/components/auth/signin/SigninCard/SignInCard';
+
+export default function SigninPage() {
+  return <SigninCard />;
 }

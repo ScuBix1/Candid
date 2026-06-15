@@ -25,6 +25,26 @@
         "loadingButton": "Inscription...",
         "displayNameLabel": "Prénom et Nom"
       }
+    },
+
+    "signin": {
+      "title": "Connexion",
+      "description": "Connectez-vous à votre compte Candid",
+      "errors": {
+        "emailInvalid": "Email invalide",
+        "passwordRequired": "Le mot de passe est requis",
+        "invalidCredentials": "Email ou mot de passe incorrect",
+        "genericError": "Une erreur est survenue. Réessaie."
+      },
+      "form": {
+        "emailLabel": "Email",
+        "emailPlaceholder": "john.doe@email.com",
+        "passwordLabel": "Mot de passe",
+        "submitButton": "Se connecter",
+        "loadingButton": "Connexion...",
+        "noAccount": "Pas encore de compte ?",
+        "signupLink": "S'inscrire"
+      }
     }
   }
 }
