@@ -43,7 +43,7 @@ export function SignupForm() {
   }
 
   return (
-    <form onSubmit={form.handleSubmit(onSubmit)}>
+    <form onSubmit={form.handleSubmit(onSubmit)} noValidate>
       <FieldGroup>
         <Field>
           <FieldLabel htmlFor="displayName">{tForm('displayNameLabel')}</FieldLabel>
