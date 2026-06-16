@@ -1,9 +1,9 @@
 import { expect, test } from '@playwright/test';
 import fr from '../messages/fr.json';
 
-const testPassword = 'TestP@ssw0rd!'; // gitguardian:ignore
-const correctPassword = 'Test12345!'; // gitguardian:ignore
-const testEmail = 'bastian.monnin@gmail.com'; // ton compte de test
+const testPassword = 'TestP@ssw0rd!';
+const correctPassword = 'Test12345!';
+const testEmail = 'bastian.monnin@gmail.com';
 
 test.describe('Signin', () => {
   test.beforeEach(async ({ page }) => {
