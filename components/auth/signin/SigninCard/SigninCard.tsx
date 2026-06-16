@@ -2,10 +2,10 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { useTranslations } from 'next-intl';
-import SignupForm from '../SignupForm/SignupForm';
+import SigninForm from '../SigninForm/SigninForm';
 
-export default function SignupCard() {
-  const t = useTranslations('auth.signup');
+export default function SigninCard() {
+  const t = useTranslations('auth.signin');
 
   return (
     <Card className="w-full max-w-md">
@@ -14,7 +14,7 @@ export default function SignupCard() {
         <CardDescription>{t('description')}</CardDescription>
       </CardHeader>
       <CardContent>
-        <SignupForm />
+        <SigninForm />
       </CardContent>
     </Card>
   );
