@@ -1,4 +1,4 @@
-import { createSigninSchema } from './singin';
+import { createSigninSchema } from './signin';
 
 const t = (key: string) => key;
 const schema = createSigninSchema(t);

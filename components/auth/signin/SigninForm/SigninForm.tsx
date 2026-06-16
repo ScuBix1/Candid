@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Field, FieldDescription, FieldError, FieldGroup, FieldLabel } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
 import { signIn } from '@/lib/actions/auth/signin/signin';
-import { createSigninSchema, SigninSchema } from '@/lib/validations/singin';
+import { createSigninSchema, SigninSchema } from '@/lib/validations/signin';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
@@ -12,7 +12,7 @@ import posthog from 'posthog-js';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
-export function SigninForm() {
+export default function SigninForm() {
   const router = useRouter();
   const t = useTranslations('auth.signin.errors');
   const tForm = useTranslations('auth.signin.form');

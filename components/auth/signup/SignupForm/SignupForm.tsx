@@ -12,7 +12,7 @@ import posthog from 'posthog-js';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
-export function SignupForm() {
+export default function SignupForm() {
   const router = useRouter();
   const t = useTranslations('auth.signup.errors');
   const tForm = useTranslations('auth.signup.form');

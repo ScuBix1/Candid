@@ -2,9 +2,9 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { useTranslations } from 'next-intl';
-import { SignupForm } from '../SignupForm/SignupForm';
+import SignupForm from '../SignupForm/SignupForm';
 
-export function SignupCard() {
+export default function SignupCard() {
   const t = useTranslations('auth.signup');
 
   return (
