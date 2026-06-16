@@ -89,12 +89,28 @@ export default function ApplicationForm({ onSuccess }: ApplicationFormProps) {
 
         <Field>
           <FieldLabel htmlFor="location">{tForm('location')}</FieldLabel>
-          <Input id="location" placeholder="Paris" {...form.register('location')} />
+          <Input
+            id="location"
+            placeholder="Paris"
+            aria-invalid={!!form.formState.errors.location}
+            {...form.register('location')}
+          />
+          {form.formState.errors.location && (
+            <FieldError>{form.formState.errors.location.message}</FieldError>
+          )}
         </Field>
 
         <Field>
           <FieldLabel htmlFor="source">{tForm('source')}</FieldLabel>
-          <Input id="source" placeholder="LinkedIn" {...form.register('source')} />
+          <Input
+            id="source"
+            placeholder="LinkedIn"
+            aria-invalid={!!form.formState.errors.source}
+            {...form.register('source')}
+          />
+          {form.formState.errors.source && (
+            <FieldError>{form.formState.errors.source.message}</FieldError>
+          )}
         </Field>
 
         <Field>

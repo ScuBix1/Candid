@@ -13,12 +13,14 @@ export default function Header() {
       <div className="flex items-center gap-2">
         <span className="font-semibold text-lg text-primary">{t('appName')}</span>
       </div>
-      <ApplicationModal />
-      <form action={signOut}>
-        <Button variant="outline" size="sm" type="submit">
-          {t('header.signout')}
-        </Button>
-      </form>
+      <div className="flex items-center gap-3">
+        <ApplicationModal />
+        <form action={signOut}>
+          <Button variant="outline" size="sm" type="submit">
+            {t('header.signout')}
+          </Button>
+        </form>
+      </div>
     </header>
   );
 }
