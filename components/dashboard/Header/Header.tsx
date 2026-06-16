@@ -3,6 +3,7 @@
 import { Button } from '@/components/ui/button';
 import { signOut } from '@/lib/actions/auth/signout/signout';
 import { useTranslations } from 'next-intl';
+import ApplicationModal from '../Application/ApplicationModal/ApplicationModal';
 
 export default function Header() {
   const t = useTranslations();
@@ -12,6 +13,7 @@ export default function Header() {
       <div className="flex items-center gap-2">
         <span className="font-semibold text-lg text-primary">{t('appName')}</span>
       </div>
+      <ApplicationModal />
       <form action={signOut}>
         <Button variant="outline" size="sm" type="submit">
           {t('header.signout')}
