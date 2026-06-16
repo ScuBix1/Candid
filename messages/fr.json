@@ -17,6 +17,31 @@
       "offer": "Offre",
       "rejected": "Refus",
       "empty": "Aucune candidature"
+    },
+    "application": {
+      "form": {
+        "fields": {
+          "company": "Entreprise",
+          "role": "Poste",
+          "location": "Lieu",
+          "source": "Source",
+          "salary": "Salaire",
+          "notes": "Notes",
+          "applied_at": "Date de candidature"
+        },
+        "submitButton": "Ajouter",
+        "loadingButton": "Ajout en cours...",
+        "errors": {
+          "companyRequired": "Le nom de l'entreprise est requis",
+          "roleRequired": "Le poste est requis",
+          "appliedAtRequired": "La date de candidature est requise",
+          "fieldTooLong": "Maximum {max} caractères"
+        }
+      },
+      "modal": {
+        "trigger": "+ Candidature",
+        "title": "Nouvelle candidature"
+      }
     }
   },
 
