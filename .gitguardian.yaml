@@ -1,4 +1,4 @@
 version: 2
 ignore-paths:
-  - e2e/
+  - e2e/*.test.ts
   - lib/validations/*.test.ts
