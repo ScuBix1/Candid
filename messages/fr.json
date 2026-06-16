@@ -1,4 +1,25 @@
 {
+  "appName": "Candid",
+  "header": {
+    "signout": "Se déconnecter"
+  },
+  "dashboard": {
+    "stats": {
+      "applications": "candidatures",
+      "responseRate": "taux de réponse",
+      "interviews": "entretiens",
+      "toFollowUp": "à relancer"
+    },
+    "kanban": {
+      "sent": "Envoyée",
+      "inProgress": "En cours",
+      "interview": "Entretien",
+      "offer": "Offre",
+      "rejected": "Refus",
+      "empty": "Aucune candidature"
+    }
+  },
+
   "auth": {
     "signup": {
       "title": " Inscription",
