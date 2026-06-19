@@ -2,6 +2,7 @@
 
 import { createClient } from '@/lib/supabase/server';
 import { CreateApplicationSchema } from '@/lib/validations/application';
+import { revalidatePath } from 'next/cache';
 
 export async function createApplication(data: CreateApplicationSchema) {
   const supabase = await createClient();
@@ -19,5 +20,8 @@ export async function createApplication(data: CreateApplicationSchema) {
   });
 
   if (error) return { error: error.message };
+
+  revalidatePath('/dashboard');
+
   return { error: null };
 }
