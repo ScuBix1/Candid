@@ -10,8 +10,11 @@ type KanbanCardProps = {
 export default function KanbanCard({ application }: KanbanCardProps) {
   const t = useTranslations('dashboard.kanban');
 
-  const daysAgo = Math.floor(
-    (new Date().getTime() - new Date(application.applied_at).getTime()) / (1000 * 60 * 60 * 24)
+  const daysAgo = Math.max(
+    0,
+    Math.floor(
+      (new Date().getTime() - new Date(application.applied_at).getTime()) / (1000 * 60 * 60 * 24)
+    )
   );
 
   const needsFollowUp = daysAgo > 7 && application.status === 'sent';
