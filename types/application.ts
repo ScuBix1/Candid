@@ -15,3 +15,5 @@ export type Application = {
   created_at: string;
   updated_at: string;
 };
+
+export type ApplicationCard = Omit<Application, 'user_id'>;

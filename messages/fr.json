@@ -16,7 +16,9 @@
       "interview": "Entretien",
       "offer": "Offre",
       "rejected": "Refus",
-      "empty": "Aucune candidature"
+      "empty": "Aucune candidature",
+      "followUp": "relancer",
+      "today": "aujourd'hui"
     },
     "application": {
       "form": {
@@ -40,7 +42,8 @@
       },
       "modal": {
         "trigger": "+ Candidature",
-        "title": "Nouvelle candidature"
+        "title": "Nouvelle candidature",
+        "description": "Remplissez les informations de votre candidature"
       }
     }
   },
