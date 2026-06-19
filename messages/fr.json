@@ -42,7 +42,8 @@
       },
       "modal": {
         "trigger": "+ Candidature",
-        "title": "Nouvelle candidature"
+        "title": "Nouvelle candidature",
+        "description": "Remplissez les informations de votre candidature"
       }
     }
   },
