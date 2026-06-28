@@ -23,6 +23,7 @@ export default function KanbanCard({ application }: KanbanCardProps) {
 
   return (
     <div
+      data-slot="kanban-card"
       className={`bg-background border rounded-lg p-3 flex flex-col gap-2 cursor-pointer hover:border-ring transition-colors ${needsFollowUp ? 'border-l-2 border-l-destructive' : ''}`}
     >
       <div className="flex flex-col gap-0.5">
