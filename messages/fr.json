@@ -32,7 +32,8 @@
           "applied_at": "Date de candidature"
         },
         "submitButton": "Ajouter",
-        "loadingButton": "Ajout en cours...",
+        "updateButton": "Mettre à jour",
+        "loadingButton": "Traitement en cours...",
         "errors": {
           "companyRequired": "Le nom de l'entreprise est requis",
           "roleRequired": "Le poste est requis",
@@ -44,6 +45,20 @@
         "trigger": "+ Candidature",
         "title": "Nouvelle candidature",
         "description": "Remplissez les informations de votre candidature"
+      },
+      "editModal": {
+        "trigger": "Modifier",
+        "title": "Modifier la candidature",
+        "description": "Modifiez les informations de votre candidature"
+      },
+      "deleteModal": {
+        "trigger": "Supprimer",
+        "title": "Supprimer la candidature",
+        "description": "Confirmation de suppression de la candidature",
+        "message": "Cette action est irréversible. La candidature sera définitivement supprimée.",
+        "cancel": "Annuler",
+        "confirmButton": "Supprimer",
+        "loadingButton": "Suppression..."
       }
     }
   },

@@ -5,10 +5,12 @@ import { Field, FieldError, FieldGroup, FieldLabel } from '@/components/ui/field
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { createApplication } from '@/lib/actions/application/create';
+import { updateApplication } from '@/lib/actions/application/update';
 import {
   createApplicationSchema,
   type CreateApplicationSchema,
 } from '@/lib/validations/application';
+import { ApplicationCard } from '@/types/application';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useTranslations } from 'next-intl';
 import posthog from 'posthog-js';
@@ -17,25 +19,28 @@ import { useForm } from 'react-hook-form';
 
 type ApplicationFormProps = {
   onSuccess: () => void;
+  application?: ApplicationCard;
 };
 
-export default function ApplicationForm({ onSuccess }: ApplicationFormProps) {
+export default function ApplicationForm({ onSuccess, application }: ApplicationFormProps) {
   const t = useTranslations('dashboard.application.form.errors');
   const tForm = useTranslations('dashboard.application.form.fields');
   const tAction = useTranslations('dashboard.application.form');
   const [serverError, setServerError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
+  const isEditing = !!application;
+
   const form = useForm<CreateApplicationSchema>({
     resolver: zodResolver(createApplicationSchema(t)),
     defaultValues: {
-      company: '',
-      role: '',
-      location: '',
-      source: '',
-      salary: '',
-      notes: '',
-      applied_at: new Date().toISOString().split('T')[0],
+      company: application?.company ?? '',
+      role: application?.role ?? '',
+      location: application?.location ?? '',
+      source: application?.source ?? '',
+      salary: application?.salary ?? '',
+      notes: application?.notes ?? '',
+      applied_at: application?.applied_at ?? new Date().toISOString().split('T')[0],
     },
   });
 
@@ -43,17 +48,23 @@ export default function ApplicationForm({ onSuccess }: ApplicationFormProps) {
     setIsLoading(true);
     setServerError(null);
 
-    const { error } = await createApplication(values);
-
-    if (error) {
-      setServerError(error);
-      setIsLoading(false);
-      return;
+    if (isEditing) {
+      const { error } = await updateApplication(application.id, values);
+      if (error) {
+        setServerError(error);
+        setIsLoading(false);
+        return;
+      }
+      posthog.capture('application_updated', { source: values.source || 'direct' });
+    } else {
+      const { error } = await createApplication(values);
+      if (error) {
+        setServerError(error);
+        setIsLoading(false);
+        return;
+      }
+      posthog.capture('application_created', { source: values.source || 'direct' });
     }
-
-    posthog.capture('application_created', {
-      source: values.source || 'direct',
-    });
 
     onSuccess();
   }
@@ -151,7 +162,11 @@ export default function ApplicationForm({ onSuccess }: ApplicationFormProps) {
 
         <Field>
           <Button type="submit" className="w-full" disabled={isLoading}>
-            {isLoading ? tAction('loadingButton') : tAction('submitButton')}
+            {isLoading
+              ? tAction('loadingButton')
+              : isEditing
+                ? tAction('updateButton')
+                : tAction('submitButton')}
           </Button>
         </Field>
       </FieldGroup>

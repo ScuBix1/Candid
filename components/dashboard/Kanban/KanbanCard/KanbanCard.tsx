@@ -2,6 +2,8 @@
 
 import { ApplicationCard } from '@/types/application';
 import { useTranslations } from 'next-intl';
+import DeleteApplicationButton from '../../Application/DeleteApplicationButton/DeleteApplicationButton';
+import EditApplicationModal from '../../Application/EditApplicationModal/EditApplicationModal';
 
 type KanbanCardProps = {
   application: ApplicationCard;
@@ -21,6 +23,7 @@ export default function KanbanCard({ application }: KanbanCardProps) {
 
   return (
     <div
+      data-slot="kanban-card"
       className={`bg-background border rounded-lg p-3 flex flex-col gap-2 cursor-pointer hover:border-ring transition-colors ${needsFollowUp ? 'border-l-2 border-l-destructive' : ''}`}
     >
       <div className="flex flex-col gap-0.5">
@@ -40,6 +43,10 @@ export default function KanbanCard({ application }: KanbanCardProps) {
             {daysAgo === 0 ? t('today') : `${daysAgo}j`}
           </span>
         </div>
+      </div>
+      <div className="flex items-center gap-1 border-t pt-2 mt-1">
+        <EditApplicationModal application={application} />
+        <DeleteApplicationButton id={application.id} />
       </div>
     </div>
   );
