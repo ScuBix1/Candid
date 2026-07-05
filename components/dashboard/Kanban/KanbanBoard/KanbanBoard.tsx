@@ -1,15 +1,36 @@
 'use client';
 
+import { updateApplicationStatus } from '@/lib/actions/application/updateStatus';
 import { ApplicationCard, ApplicationStatus } from '@/types/application';
+import {
+  DndContext,
+  DragEndEvent,
+  DragOverlay,
+  PointerSensor,
+  useSensor,
+  useSensors,
+} from '@dnd-kit/core';
 import { useTranslations } from 'next-intl';
+import { useState } from 'react';
+import KanbanCard from '../KanbanCard/KanbanCard';
 import KanbanColumn from '../KanbanColumn/KanbanColumn';
 
 type KanbanBoardProps = {
   applications: ApplicationCard[];
 };
 
-export default function KanbanBoard({ applications }: KanbanBoardProps) {
+export default function KanbanBoard({ applications: initialApplications }: KanbanBoardProps) {
   const t = useTranslations('dashboard.kanban');
+  const [applications, setApplications] = useState(initialApplications);
+  const [activeApplication, setActiveApplication] = useState<ApplicationCard | null>(null);
+
+  const sensors = useSensors(
+    useSensor(PointerSensor, {
+      activationConstraint: {
+        distance: 3,
+      },
+    })
+  );
 
   const columns: { id: ApplicationStatus; label: string }[] = [
     { id: 'sent', label: t('sent') },
@@ -19,15 +40,51 @@ export default function KanbanBoard({ applications }: KanbanBoardProps) {
     { id: 'rejected', label: t('rejected') },
   ];
 
+  async function handleDragEnd(event: DragEndEvent) {
+    const { active, over } = event;
+
+    setActiveApplication(null);
+
+    if (!over) return;
+    if (active.id === over.id) return;
+
+    const applicationId = active.id as string;
+    const newStatus = over.id as ApplicationStatus;
+
+    setApplications((prev) =>
+      prev.map((app) => (app.id === applicationId ? { ...app, status: newStatus } : app))
+    );
+
+    const { error } = await updateApplicationStatus(applicationId, newStatus);
+
+    if (error) {
+      setApplications(initialApplications);
+    }
+  }
+
   return (
-    <div className="flex gap-4 p-6 overflow-x-auto">
-      {columns.map((col) => (
-        <KanbanColumn
-          key={col.id}
-          label={col.label}
-          applications={applications.filter((app) => app.status === col.id)}
-        />
-      ))}
-    </div>
+    <DndContext
+      sensors={sensors}
+      onDragStart={(event) => {
+        const app = applications.find((a) => a.id === event.active.id);
+        if (app) setActiveApplication(app);
+      }}
+      onDragEnd={handleDragEnd}
+    >
+      <div className="flex gap-4 p-6 overflow-x-auto">
+        {columns.map((col) => (
+          <KanbanColumn
+            key={col.id}
+            id={col.id}
+            label={col.label}
+            applications={applications.filter((app) => app.status === col.id)}
+          />
+        ))}
+      </div>
+
+      <DragOverlay>
+        {activeApplication && <KanbanCard application={activeApplication} isDragging />}
+      </DragOverlay>
+    </DndContext>
   );
 }
