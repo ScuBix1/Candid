@@ -11,6 +11,7 @@ import {
   useSensors,
 } from '@dnd-kit/core';
 import { useTranslations } from 'next-intl';
+import posthog from 'posthog-js';
 import { useState } from 'react';
 import KanbanCard from '../KanbanCard/KanbanCard';
 import KanbanColumn from '../KanbanColumn/KanbanColumn';
@@ -59,7 +60,13 @@ export default function KanbanBoard({ applications: initialApplications }: Kanba
 
     if (error) {
       setApplications(initialApplications);
+      return;
     }
+
+    posthog.capture('application_moved', {
+      from_column: applications.find((a) => a.id === applicationId)?.status,
+      to_column: newStatus,
+    });
   }
 
   return (
