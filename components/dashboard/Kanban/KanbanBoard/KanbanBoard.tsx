@@ -1,6 +1,7 @@
 'use client';
 
 import { updateApplicationStatus } from '@/lib/actions/application/updateStatus';
+import { useApplicationStore } from '@/lib/stores/applicationStore';
 import { ApplicationCard, ApplicationStatus } from '@/types/application';
 import {
   DndContext,
@@ -12,7 +13,7 @@ import {
 } from '@dnd-kit/core';
 import { useTranslations } from 'next-intl';
 import posthog from 'posthog-js';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import KanbanCard from '../KanbanCard/KanbanCard';
 import KanbanColumn from '../KanbanColumn/KanbanColumn';
 
@@ -22,8 +23,12 @@ type KanbanBoardProps = {
 
 export default function KanbanBoard({ applications: initialApplications }: KanbanBoardProps) {
   const t = useTranslations('dashboard.kanban');
-  const [applications, setApplications] = useState(initialApplications);
+  const { applications, setApplications, moveApplication } = useApplicationStore();
   const [activeApplication, setActiveApplication] = useState<ApplicationCard | null>(null);
+
+  useEffect(() => {
+    setApplications(initialApplications);
+  }, [initialApplications, setApplications]);
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -51,22 +56,20 @@ export default function KanbanBoard({ applications: initialApplications }: Kanba
 
     const applicationId = active.id as string;
     const newStatus = over.id as ApplicationStatus;
+    const previousStatus = applications.find((a) => a.id === applicationId)?.status;
 
-    setApplications((prev) =>
-      prev.map((app) => (app.id === applicationId ? { ...app, status: newStatus } : app))
-    );
+    moveApplication(applicationId, newStatus);
+
+    posthog.capture('application_moved', {
+      from_column: previousStatus,
+      to_column: newStatus,
+    });
 
     const { error } = await updateApplicationStatus(applicationId, newStatus);
 
     if (error) {
-      setApplications(initialApplications);
-      return;
+      moveApplication(applicationId, previousStatus!);
     }
-
-    posthog.capture('application_moved', {
-      from_column: applications.find((a) => a.id === applicationId)?.status,
-      to_column: newStatus,
-    });
   }
 
   return (
