@@ -11,6 +11,7 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 import { deleteApplication } from '@/lib/actions/application/delete';
+import { useApplicationStore } from '@/lib/stores/applicationStore';
 import { useTranslations } from 'next-intl';
 import posthog from 'posthog-js';
 import { useState } from 'react';
@@ -23,9 +24,13 @@ export default function DeleteApplicationButton({ id }: DeleteApplicationButtonP
   const [open, setOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const t = useTranslations('dashboard.application.deleteModal');
+  const { removeApplication } = useApplicationStore();
 
   async function handleDelete() {
     setIsLoading(true);
+
+    removeApplication(id);
+    setOpen(false);
 
     const { error } = await deleteApplication(id);
 
@@ -35,7 +40,6 @@ export default function DeleteApplicationButton({ id }: DeleteApplicationButtonP
     }
 
     posthog.capture('application_deleted');
-    setOpen(false);
   }
 
   return (
