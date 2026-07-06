@@ -3,14 +3,22 @@
 import { Button } from '@/components/ui/button';
 import { Field, FieldError, FieldGroup, FieldLabel } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
 import { createApplication } from '@/lib/actions/application/create';
 import { updateApplication } from '@/lib/actions/application/update';
+import { useApplicationStore } from '@/lib/stores/applicationStore';
 import {
   createApplicationSchema,
   type CreateApplicationSchema,
 } from '@/lib/validations/application';
-import { ApplicationCard } from '@/types/application';
+import { ApplicationCard, ApplicationStatus } from '@/types/application';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useTranslations } from 'next-intl';
 import posthog from 'posthog-js';
@@ -26,9 +34,11 @@ export default function ApplicationForm({ onSuccess, application }: ApplicationF
   const t = useTranslations('dashboard.application.form.errors');
   const tForm = useTranslations('dashboard.application.form.fields');
   const tAction = useTranslations('dashboard.application.form');
+  const tStatus = useTranslations('dashboard.kanban');
   const [serverError, setServerError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
+  const { updateApplication: updateStore } = useApplicationStore();
   const isEditing = !!application;
 
   const form = useForm<CreateApplicationSchema>({
@@ -41,6 +51,7 @@ export default function ApplicationForm({ onSuccess, application }: ApplicationF
       salary: application?.salary ?? '',
       notes: application?.notes ?? '',
       applied_at: application?.applied_at ?? new Date().toISOString().split('T')[0],
+      status: application?.status ?? 'sent',
     },
   });
 
@@ -55,6 +66,7 @@ export default function ApplicationForm({ onSuccess, application }: ApplicationF
         setIsLoading(false);
         return;
       }
+      updateStore({ ...application, ...values });
       posthog.capture('application_updated', { source: values.source || 'direct' });
     } else {
       const { error } = await createApplication(values);
@@ -149,6 +161,27 @@ export default function ApplicationForm({ onSuccess, application }: ApplicationF
             <FieldError>{form.formState.errors.applied_at.message}</FieldError>
           )}
         </Field>
+
+        {isEditing && (
+          <Field>
+            <FieldLabel htmlFor="status">{tForm('status')}</FieldLabel>
+            <Select
+              defaultValue={application?.status ?? 'sent'}
+              onValueChange={(value) => form.setValue('status', value as ApplicationStatus)}
+            >
+              <SelectTrigger id="status">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="sent">{tStatus('sent')}</SelectItem>
+                <SelectItem value="in_progress">{tStatus('inProgress')}</SelectItem>
+                <SelectItem value="interview">{tStatus('interview')}</SelectItem>
+                <SelectItem value="offer">{tStatus('offer')}</SelectItem>
+                <SelectItem value="rejected">{tStatus('rejected')}</SelectItem>
+              </SelectContent>
+            </Select>
+          </Field>
+        )}
 
         <Field>
           <FieldLabel htmlFor="notes">{tForm('notes')}</FieldLabel>
