@@ -15,8 +15,15 @@ type KanbanCardProps = {
 export default function KanbanCard({ application, isDragging = false }: KanbanCardProps) {
   const t = useTranslations('dashboard.kanban');
 
-  const { attributes, listeners, setNodeRef, transform } = useDraggable({
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    transform,
+    isDragging: isBeingDragged,
+  } = useDraggable({
     id: application.id,
+    disabled: isDragging,
   });
 
   const daysAgo = Math.max(
@@ -37,12 +44,19 @@ export default function KanbanCard({ application, isDragging = false }: KanbanCa
       ref={setNodeRef}
       style={style}
       data-slot="kanban-card"
+      {...attributes}
+      {...listeners}
       className={`bg-background border rounded-lg p-3 flex flex-col gap-2 transition-colors ${
         needsFollowUp ? 'border-l-2 border-l-destructive' : ''
-      } ${isDragging ? 'opacity-50 shadow-lg' : 'cursor-grab hover:border-ring'}`}
+      } ${
+        isDragging
+          ? 'opacity-100 shadow-lg cursor-grabbing'
+          : isBeingDragged
+            ? 'opacity-30'
+            : 'cursor-grab hover:border-ring'
+      }`}
     >
-      {/* Zone de drag — exclut les boutons */}
-      <div {...attributes} {...listeners} className="flex flex-col gap-0.5 cursor-grab">
+      <div className="flex flex-col gap-0.5">
         <span className="text-sm font-medium text-foreground">{application.company}</span>
         <span className="text-xs text-muted-foreground">{application.role}</span>
       </div>
@@ -61,7 +75,10 @@ export default function KanbanCard({ application, isDragging = false }: KanbanCa
         </div>
       </div>
 
-      <div className="flex items-center gap-1 border-t pt-2 mt-1">
+      <div
+        className="flex items-center gap-1 border-t pt-2 mt-1"
+        onPointerDown={(e) => e.stopPropagation()}
+      >
         <EditApplicationModal application={application} />
         <DeleteApplicationButton id={application.id} />
       </div>
