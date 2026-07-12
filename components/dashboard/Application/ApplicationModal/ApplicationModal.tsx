@@ -24,7 +24,7 @@ export default function ApplicationModal() {
       </DialogTrigger>
       <DialogContent
         className="max-w-lg max-h-[90vh] overflow-y-auto"
-        onInteractOutside={(e) => e.preventDefault()}
+        onInteractOutside={(event) => event.preventDefault()}
       >
         <DialogDescription className="sr-only">{t('description')}</DialogDescription>
         <DialogHeader>

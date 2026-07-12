@@ -4,6 +4,10 @@
     "signout": "Se déconnecter"
   },
   "dashboard": {
+    "filter": {
+      "followUpActive": "Affichage filtré — candidatures à relancer",
+      "reset": "Voir toutes les candidatures"
+    },
     "stats": {
       "applications": "candidatures",
       "responseRate": "taux de réponse",
