@@ -1,16 +1,30 @@
 'use client';
 
+import DeleteApplicationButton from '@/components/dashboard/Application/DeleteApplicationButton/DeleteApplicationButton';
+import EditApplicationModal from '@/components/dashboard/Application/EditApplicationModal/EditApplicationModal';
 import { ApplicationCard } from '@/types/application';
+import { useDraggable } from '@dnd-kit/core';
+import { CSS } from '@dnd-kit/utilities';
 import { useTranslations } from 'next-intl';
-import DeleteApplicationButton from '../../Application/DeleteApplicationButton/DeleteApplicationButton';
-import EditApplicationModal from '../../Application/EditApplicationModal/EditApplicationModal';
 
 type KanbanCardProps = {
   application: ApplicationCard;
+  isDragging?: boolean;
 };
 
-export default function KanbanCard({ application }: KanbanCardProps) {
+export default function KanbanCard({ application, isDragging = false }: KanbanCardProps) {
   const t = useTranslations('dashboard.kanban');
+
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    transform,
+    isDragging: isBeingDragged,
+  } = useDraggable({
+    id: application.id,
+    disabled: isDragging,
+  });
 
   const daysAgo = Math.max(
     0,
@@ -21,10 +35,26 @@ export default function KanbanCard({ application }: KanbanCardProps) {
 
   const needsFollowUp = daysAgo > 7 && application.status === 'sent';
 
+  const style = {
+    transform: CSS.Translate.toString(transform),
+  };
+
   return (
     <div
+      ref={setNodeRef}
+      style={style}
       data-slot="kanban-card"
-      className={`bg-background border rounded-lg p-3 flex flex-col gap-2 cursor-pointer hover:border-ring transition-colors ${needsFollowUp ? 'border-l-2 border-l-destructive' : ''}`}
+      {...attributes}
+      {...listeners}
+      className={`bg-background border rounded-lg p-3 flex flex-col gap-2 transition-colors ${
+        needsFollowUp ? 'border-l-2 border-l-destructive' : ''
+      } ${
+        isDragging
+          ? 'opacity-100 shadow-lg cursor-grabbing'
+          : isBeingDragged
+            ? 'opacity-30'
+            : 'cursor-grab hover:border-ring'
+      }`}
     >
       <div className="flex flex-col gap-0.5">
         <span className="text-sm font-medium text-foreground">{application.company}</span>
@@ -44,7 +74,11 @@ export default function KanbanCard({ application }: KanbanCardProps) {
           </span>
         </div>
       </div>
-      <div className="flex items-center gap-1 border-t pt-2 mt-1">
+
+      <div
+        className="flex items-center gap-1 border-t pt-2 mt-1"
+        onPointerDown={(e) => e.stopPropagation()}
+      >
         <EditApplicationModal application={application} />
         <DeleteApplicationButton id={application.id} />
       </div>

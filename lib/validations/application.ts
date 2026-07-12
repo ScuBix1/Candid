@@ -29,6 +29,7 @@ export const createApplicationSchema = (t: (key: string, values?: TranslationVal
       .max(2000, t('fieldTooLong', { max: 2000 }))
       .optional(),
     applied_at: z.string().min(1, t('appliedAtRequired')),
+    status: z.enum(['sent', 'in_progress', 'interview', 'offer', 'rejected']).optional(),
   });
 
 export type CreateApplicationSchema = z.infer<ReturnType<typeof createApplicationSchema>>;

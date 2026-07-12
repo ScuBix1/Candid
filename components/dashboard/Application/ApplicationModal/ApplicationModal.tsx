@@ -22,7 +22,10 @@ export default function ApplicationModal() {
       <DialogTrigger asChild>
         <Button size="sm">{t('trigger')}</Button>
       </DialogTrigger>
-      <DialogContent className="max-w-lg max-h-[90vh] overflow-y-auto">
+      <DialogContent
+        className="max-w-lg max-h-[90vh] overflow-y-auto"
+        onInteractOutside={(e) => e.preventDefault()}
+      >
         <DialogDescription className="sr-only">{t('description')}</DialogDescription>
         <DialogHeader>
           <DialogTitle>{t('title')}</DialogTitle>

@@ -21,6 +21,13 @@
       "today": "aujourd'hui"
     },
     "application": {
+      "status": {
+        "sent": "Envoyée",
+        "inProgress": "En cours",
+        "interview": "Entretien",
+        "offer": "Offre",
+        "rejected": "Refus"
+      },
       "form": {
         "fields": {
           "company": "Entreprise",
@@ -29,6 +36,7 @@
           "source": "Source",
           "salary": "Salaire",
           "notes": "Notes",
+          "status": "Status",
           "applied_at": "Date de candidature"
         },
         "submitButton": "Ajouter",
