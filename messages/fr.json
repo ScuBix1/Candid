@@ -12,8 +12,7 @@
       "applications": "candidatures",
       "responseRate": "taux de réponse",
       "interviews": "entretiens",
-      "toFollowUp": "à relancer",
-      "resetFilter": "Voir toutes les candidatures"
+      "toFollowUp": "à relancer"
     },
     "kanban": {
       "sent": "Envoyée",
