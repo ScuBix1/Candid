@@ -4,11 +4,16 @@
     "signout": "Se déconnecter"
   },
   "dashboard": {
+    "filter": {
+      "followUpActive": "Affichage filtré — candidatures à relancer",
+      "reset": "Voir toutes les candidatures"
+    },
     "stats": {
       "applications": "candidatures",
       "responseRate": "taux de réponse",
       "interviews": "entretiens",
-      "toFollowUp": "à relancer"
+      "toFollowUp": "à relancer",
+      "resetFilter": "Voir toutes les candidatures"
     },
     "kanban": {
       "sent": "Envoyée",
