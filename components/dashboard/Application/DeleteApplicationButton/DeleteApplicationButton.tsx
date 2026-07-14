@@ -18,10 +18,16 @@ import { useState } from 'react';
 
 type DeleteApplicationButtonProps = {
   id: string;
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
 };
 
-export default function DeleteApplicationButton({ id }: DeleteApplicationButtonProps) {
-  const [open, setOpen] = useState(false);
+export default function DeleteApplicationButton({
+  id,
+  open: externalOpen,
+  onOpenChange: externalOnOpenChange,
+}: DeleteApplicationButtonProps) {
+  const [internalOpen, setInternalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const t = useTranslations('dashboard.application.deleteModal');
   const { removeApplication } = useApplicationStore();
@@ -30,7 +36,7 @@ export default function DeleteApplicationButton({ id }: DeleteApplicationButtonP
     setIsLoading(true);
 
     removeApplication(id);
-    setOpen(false);
+    setInternalOpen(false);
 
     const { error } = await deleteApplication(id);
 
@@ -43,7 +49,10 @@ export default function DeleteApplicationButton({ id }: DeleteApplicationButtonP
   }
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog
+      open={externalOpen ?? internalOpen}
+      onOpenChange={externalOnOpenChange ?? setInternalOpen}
+    >
       <DialogTrigger asChild>
         <Button variant="ghost" size="sm" className="text-destructive hover:text-destructive">
           {t('trigger')}
@@ -56,7 +65,17 @@ export default function DeleteApplicationButton({ id }: DeleteApplicationButtonP
         </DialogHeader>
         <p className="text-sm text-muted-foreground">{t('message')}</p>
         <DialogFooter>
-          <Button variant="outline" onClick={() => setOpen(false)} disabled={isLoading}>
+          <Button
+            variant="outline"
+            onClick={() => {
+              if (externalOnOpenChange) {
+                externalOnOpenChange(false);
+              } else {
+                setInternalOpen(false);
+              }
+            }}
+            disabled={isLoading}
+          >
             {t('cancel')}
           </Button>
           <Button variant="destructive" onClick={handleDelete} disabled={isLoading}>

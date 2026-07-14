@@ -14,6 +14,7 @@ export type Application = {
   last_activity_at: string;
   created_at: string;
   updated_at: string;
+  last_generated_email: string | null;
 };
 
 export type ApplicationCard = Omit<Application, 'user_id'>;

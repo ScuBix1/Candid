@@ -16,14 +16,23 @@ import ApplicationForm from '../ApplicationForm/ApplicationForm';
 
 type EditApplicationModalProps = {
   application: ApplicationCard;
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
 };
 
-export default function EditApplicationModal({ application }: EditApplicationModalProps) {
-  const [open, setOpen] = useState(false);
+export default function EditApplicationModal({
+  application,
+  open: externalOpen,
+  onOpenChange: externalOnOpenChange,
+}: EditApplicationModalProps) {
+  const [internalOpen, setInternalOpen] = useState(false);
   const t = useTranslations('dashboard.application.editModal');
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog
+      open={externalOpen ?? internalOpen}
+      onOpenChange={externalOnOpenChange ?? setInternalOpen}
+    >
       <DialogTrigger asChild>
         <Button variant="ghost" size="sm">
           {t('trigger')}
@@ -34,7 +43,16 @@ export default function EditApplicationModal({ application }: EditApplicationMod
         <DialogHeader>
           <DialogTitle>{t('title')}</DialogTitle>
         </DialogHeader>
-        <ApplicationForm application={application} onSuccess={() => setOpen(false)} />
+        <ApplicationForm
+          application={application}
+          onSuccess={() => {
+            if (externalOnOpenChange) {
+              externalOnOpenChange(false);
+            } else {
+              setInternalOpen(false);
+            }
+          }}
+        />
       </DialogContent>
     </Dialog>
   );

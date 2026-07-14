@@ -7,7 +7,7 @@ import {
   DndContext,
   DragEndEvent,
   DragOverlay,
-  PointerSensor,
+  MouseSensor,
   useSensor,
   useSensors,
 } from '@dnd-kit/core';
@@ -23,7 +23,8 @@ type KanbanBoardProps = {
 
 export default function KanbanBoard({ applications: initialApplications }: KanbanBoardProps) {
   const t = useTranslations('dashboard.kanban');
-  const { applications, setApplications, moveApplication } = useApplicationStore();
+  const { applications, setApplications, moveApplication, showFollowUpOnly } =
+    useApplicationStore();
   const [activeApplication, setActiveApplication] = useState<ApplicationCard | null>(null);
 
   useEffect(() => {
@@ -31,9 +32,9 @@ export default function KanbanBoard({ applications: initialApplications }: Kanba
   }, [initialApplications, setApplications]);
 
   const sensors = useSensors(
-    useSensor(PointerSensor, {
+    useSensor(MouseSensor, {
       activationConstraint: {
-        distance: 3,
+        distance: 5,
       },
     })
   );
@@ -46,6 +47,16 @@ export default function KanbanBoard({ applications: initialApplications }: Kanba
     { id: 'rejected', label: t('rejected') },
   ];
 
+  const filteredApplications = showFollowUpOnly
+    ? applications.filter((application) => {
+        const daysAgo = Math.floor(
+          (new Date().getTime() - new Date(application.applied_at).getTime()) /
+            (1000 * 60 * 60 * 24)
+        );
+        return daysAgo > 7 && application.status === 'sent';
+      })
+    : applications;
+
   async function handleDragEnd(event: DragEndEvent) {
     const { active, over } = event;
 
@@ -56,7 +67,9 @@ export default function KanbanBoard({ applications: initialApplications }: Kanba
 
     const applicationId = active.id as string;
     const newStatus = over.id as ApplicationStatus;
-    const previousStatus = applications.find((a) => a.id === applicationId)?.status;
+    const previousStatus = applications.find(
+      (application) => application.id === applicationId
+    )?.status;
 
     moveApplication(applicationId, newStatus);
 
@@ -76,7 +89,7 @@ export default function KanbanBoard({ applications: initialApplications }: Kanba
     <DndContext
       sensors={sensors}
       onDragStart={(event) => {
-        const app = applications.find((a) => a.id === event.active.id);
+        const app = applications.find((application) => application.id === event.active.id);
         if (app) setActiveApplication(app);
       }}
       onDragEnd={handleDragEnd}
@@ -87,7 +100,9 @@ export default function KanbanBoard({ applications: initialApplications }: Kanba
             key={col.id}
             id={col.id}
             label={col.label}
-            applications={applications.filter((app) => app.status === col.id)}
+            applications={filteredApplications.filter(
+              (application) => application.status === col.id
+            )}
           />
         ))}
       </div>
