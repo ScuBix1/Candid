@@ -7,9 +7,30 @@ import './globals.css';
 const geist = Geist({ subsets: ['latin'], variable: '--font-sans' });
 
 export const metadata: Metadata = {
-  title: 'Candid — Track your job search',
+  title: {
+    default: 'Candid — Suivi de candidatures avec IA',
+    template: '%s | Candid',
+  },
   description:
-    'Kanban board for job hunters. Track applications, get follow-up reminders and generate emails with AI.',
+    "Kanban visuel, relances automatiques et génération d'emails par IA. Gratuit et sans carte bancaire.",
+  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL ?? 'https://follow-candid.vercel.app'),
+  openGraph: {
+    title: 'Candid — Suivi de candidatures avec IA',
+    description: "Kanban visuel, relances automatiques et génération d'emails par IA.",
+    url: `${process.env.NEXT_PUBLIC_APP_URL}`,
+    siteName: 'Candid',
+    locale: 'fr_FR',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Candid — Suivi de candidatures avec IA',
+    description: "Kanban visuel, relances automatiques et génération d'emails par IA.",
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
 export default function RootLayout({
