@@ -18,7 +18,7 @@ export async function getApplications(): Promise<{
   const { data, error } = await supabase
     .from('applications')
     .select(
-      'id, company, role, location, status, source, salary, notes, applied_at, last_activity_at, created_at, updated_at'
+      'id, company, role, location, status, source, salary, notes, applied_at, last_activity_at, last_generated_email, created_at, updated_at'
     )
     .eq('user_id', user.id)
     .order('created_at', { ascending: false });

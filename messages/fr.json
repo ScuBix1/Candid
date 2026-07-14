@@ -22,9 +22,25 @@
       "rejected": "Refus",
       "empty": "Aucune candidature",
       "followUp": "relancer",
-      "today": "aujourd'hui"
+      "today": "aujourd'hui",
+      "generateFollowUp": "Générer une relance"
     },
     "application": {
+      "generateModal": {
+        "title": "Générer un email de relance",
+        "description": "Génération d'un email de relance par IA",
+        "generate": "✨ Générer",
+        "generating": "Génération en cours...",
+        "copy": "Copier l'email",
+        "copied": "Copié !",
+        "regenerate": "Regénérer",
+        "close": "Fermer",
+        "noGenerationsLeft": "Tu as utilisé tes 3 générations gratuites pour cette candidature.",
+        "generationFailed": "Une erreur est survenue. Réessaie.",
+        "remainingGenerations": "{count} génération(s) gratuite(s) restante(s)",
+        "generatingMessage": "Génération en cours, cela peut prendre quelques secondes...",
+        "lastGenerated": "Dernier email généré"
+      },
       "status": {
         "sent": "Envoyée",
         "inProgress": "En cours",

@@ -34,7 +34,7 @@ export default function KanbanBoard({ applications: initialApplications }: Kanba
   const sensors = useSensors(
     useSensor(MouseSensor, {
       activationConstraint: {
-        distance: 3,
+        distance: 5,
       },
     })
   );

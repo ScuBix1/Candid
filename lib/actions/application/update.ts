@@ -23,6 +23,8 @@ export async function updateApplication(id: string, data: CreateApplicationSchem
     .eq('id', id)
     .eq('user_id', user.id);
 
+  console.log('update data', data);
+  console.log('update error', error);
   if (error) return { error: error.message };
 
   revalidatePath('/dashboard');
