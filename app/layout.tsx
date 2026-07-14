@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   },
   description:
     "Kanban visuel, relances automatiques et génération d'emails par IA. Gratuit et sans carte bancaire.",
-  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL!),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL ?? 'https://follow-candid.vercel.app'),
   openGraph: {
     title: 'Candid — Suivi de candidatures avec IA',
     description: "Kanban visuel, relances automatiques et génération d'emails par IA.",
