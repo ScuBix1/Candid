@@ -3,6 +3,46 @@
   "header": {
     "signout": "Se déconnecter"
   },
+  "landing": {
+    "header": {
+      "signin": "Se connecter",
+      "signup": "Commencer gratuitement"
+    },
+    "hero": {
+      "title": "Trouve ton job, sans perdre le fil",
+      "description": "Candid centralise toutes tes candidatures dans un kanban visuel, te rappelle de relancer et génère tes emails par IA.",
+      "cta": "Commencer gratuitement",
+      "signin": "J'ai déjà un compte",
+      "subtext": "Gratuit · Sans carte bancaire · Prêt en 30 secondes"
+    },
+    "features": {
+      "title": "Tout ce qu'il te faut pour ta recherche d'emploi",
+      "subtitle": "Simple, efficace, gratuit",
+      "kanban": {
+        "title": "Kanban visuel",
+        "description": "Visualise toutes tes candidatures en un coup d'œil. Glisse les cartes entre les colonnes pour mettre à jour leur statut."
+      },
+      "reminders": {
+        "title": "Relances automatiques",
+        "description": "Candid détecte automatiquement les candidatures sans réponse depuis plus de 7 jours et t'invite à relancer."
+      },
+      "ai": {
+        "title": "Emails générés par IA",
+        "description": "Génère un email de relance professionnel en un clic grâce à l'IA. Personnalisé avec le nom de l'entreprise et le poste."
+      }
+    },
+    "cta": {
+      "title": "Prêt à organiser ta recherche d'emploi ?",
+      "description": "Rejoins les chercheurs d'emploi qui utilisent Candid pour ne plus jamais rater une relance.",
+      "cta": "Créer mon compte gratuitement",
+      "subtext": "Gratuit · Sans carte bancaire · Prêt en 30 secondes"
+    },
+    "footer": {
+      "signin": "Se connecter",
+      "signup": "S'inscrire",
+      "copyright": "© {year} Candid. Tous droits réservés."
+    }
+  },
   "dashboard": {
     "filter": {
       "followUpActive": "Affichage filtré — candidatures à relancer",
