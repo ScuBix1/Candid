@@ -56,6 +56,7 @@ export default function ApplicationForm({ onSuccess, application }: ApplicationF
   });
 
   async function onSubmit(values: CreateApplicationSchema) {
+    console.log('values', values);
     setIsLoading(true);
     setServerError(null);
 
