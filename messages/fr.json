@@ -6,7 +6,8 @@
   "landing": {
     "header": {
       "signin": "Se connecter",
-      "signup": "Commencer gratuitement"
+      "signup": "Commencer gratuitement",
+      "signupShort": "S'inscrire"
     },
     "hero": {
       "title": "Trouve ton job, sans perdre le fil",
@@ -132,6 +133,9 @@
   },
 
   "auth": {
+    "layout": {
+      "backHome": "Accueil"
+    },
     "signup": {
       "title": " Inscription",
       "description": "Entrez vos informations pour vous inscrire.",
