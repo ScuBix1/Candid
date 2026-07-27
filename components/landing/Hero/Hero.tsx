@@ -13,15 +13,18 @@ export default async function Hero() {
         </h1>
         <p className="text-lg text-muted-foreground max-w-xl mx-auto">{t('description')}</p>
       </div>
-      <div className="flex items-center gap-3">
-        <Link href="/signup">
-          <Button size="lg">{t('cta')}</Button>
-        </Link>
-        <Link href="/signin">
-          <Button variant="outline" size="lg">
+      <div className="flex flex-col sm:flex-row items-center justify-center gap-3 w-full">
+        <Button size="lg" asChild>
+          <Link href="/signup" className="sm:max-w-40">
+            {t('cta')}
+          </Link>
+        </Button>
+
+        <Button variant="outline" size="lg" asChild>
+          <Link href="/signin" className="sm:max-w-40">
             {t('signin')}
-          </Button>
-        </Link>
+          </Link>
+        </Button>
       </div>
       <p className="text-sm text-muted-foreground">{t('subtext')}</p>
     </section>
