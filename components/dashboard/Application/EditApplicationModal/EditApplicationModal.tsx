@@ -38,7 +38,7 @@ export default function EditApplicationModal({
           {t('trigger')}
         </Button>
       </DialogTrigger>
-      <DialogContent className="max-w-lg max-h-[90vh] overflow-y-auto">
+      <DialogContent className="max-h-[90vh] overflow-y-auto">
         <DialogDescription className="sr-only">{t('description')}</DialogDescription>
         <DialogHeader>
           <DialogTitle>{t('title')}</DialogTitle>
