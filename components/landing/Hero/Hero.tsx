@@ -15,13 +15,13 @@ export default async function Hero() {
       </div>
       <div className="flex flex-col sm:flex-row items-center justify-center gap-3 w-full">
         <Button size="lg" asChild>
-          <Link href="/signup" className="sm:max-w-40">
+          <Link href="/signup" className="sm:max-w-60">
             {t('cta')}
           </Link>
         </Button>
 
         <Button variant="outline" size="lg" asChild>
-          <Link href="/signin" className="sm:max-w-40">
+          <Link href="/signin" className="sm:max-w-60">
             {t('signin')}
           </Link>
         </Button>
