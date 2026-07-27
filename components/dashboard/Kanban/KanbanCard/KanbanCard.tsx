@@ -130,6 +130,7 @@ export default function KanbanCard({ application, isDragging = false }: KanbanCa
             open={editOpen}
             onOpenChange={setEditOpen}
           />
+
           <DeleteApplicationButton
             id={application.id}
             open={deleteOpen}
